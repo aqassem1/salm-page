@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>test</title>
+<style>body{margin:0;padding:20px;background:#070605;color:#f4ecd8;font:16px/1.8 Tahoma,sans-serif}h1{font-size:20px;color:#f1d98a}.r{padding:6px 0;border-bottom:1px solid #2a2418}.ok{color:#6fd195}.no{color:#ff8a80}</style></head><body>
+<h1>فحص الاتصال</h1><div id="o">جارٍ الفحص…</div>
+<script>
+(function(){var o=document.getElementById("o"),rows=[];
+function add(n,ok,x){rows.push('<div class="r">'+(ok?'<span class="ok">✓</span> ':'<span class="no">✗</span> ')+n+(x?' <small>'+x+'</small>':'')+'</div>');o.innerHTML=rows.join("")}
+add("الصفحة وصلت",true);
+add("اتصال آمن https",location.protocol==="https:",location.protocol);
+add("التشفير crypto.subtle",!!(window.crypto&&crypto.subtle));
+try{localStorage.setItem("t","1");localStorage.removeItem("t");add("التخزين المحلي",true)}catch(e){add("التخزين المحلي",false)}
+add("TextEncoder / Promise",!!(window.TextEncoder&&window.Promise));
+add("المتصفح",true,navigator.userAgent);
+var im=new Image();im.onload=function(){add("تحميل الصورة",true)};im.onerror=function(){add("تحميل الصورة",false)};im.src="logo.jpg?"+Date.now();
+if(window.crypto&&crypto.subtle){var t=performance.now();crypto.subtle.importKey("raw",new TextEncoder().encode("x"),"PBKDF2",false,["deriveBits"]).then(function(k){return crypto.subtle.deriveBits({name:"PBKDF2",salt:new Uint8Array(16),iterations:250000,hash:"SHA-256"},k,512)}).then(function(){add("سرعة التحقق من الرمز",true,Math.round(performance.now()-t)+" ms")},function(e){add("سرعة التحقق من الرمز",false,String(e))})}
+})();
+</script></body></html>
